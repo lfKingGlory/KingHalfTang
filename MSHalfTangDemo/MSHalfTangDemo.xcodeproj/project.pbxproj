@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6A72B9501F442A5D004C5B39 /* UINavigationController+JNAPushPopCompletionBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A72B94F1F442A5D004C5B39 /* UINavigationController+JNAPushPopCompletionBlock.m */; };
 		6A89B4F51F036EBB00718E65 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A89B4F41F036EBB00718E65 /* main.m */; };
 		6A89B4F81F036EBB00718E65 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A89B4F71F036EBB00718E65 /* AppDelegate.m */; };
 		6A89B4FB1F036EBB00718E65 /* MSHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A89B4FA1F036EBB00718E65 /* MSHomeViewController.m */; };
@@ -91,6 +92,8 @@
 
 /* Begin PBXFileReference section */
 		39102A25D6C1A526FD297AC0 /* Pods-MSHalfTangDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MSHalfTangDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-MSHalfTangDemo/Pods-MSHalfTangDemo.release.xcconfig"; sourceTree = "<group>"; };
+		6A72B94E1F442A5D004C5B39 /* UINavigationController+JNAPushPopCompletionBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+JNAPushPopCompletionBlock.h"; sourceTree = "<group>"; };
+		6A72B94F1F442A5D004C5B39 /* UINavigationController+JNAPushPopCompletionBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+JNAPushPopCompletionBlock.m"; sourceTree = "<group>"; };
 		6A89B4F01F036EBB00718E65 /* MSHalfTangDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MSHalfTangDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A89B4F41F036EBB00718E65 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		6A89B4F61F036EBB00718E65 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -202,6 +205,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6A72B94D1F442A4B004C5B39 /* category */ = {
+			isa = PBXGroup;
+			children = (
+				6A72B94E1F442A5D004C5B39 /* UINavigationController+JNAPushPopCompletionBlock.h */,
+				6A72B94F1F442A5D004C5B39 /* UINavigationController+JNAPushPopCompletionBlock.m */,
+			);
+			name = category;
+			sourceTree = "<group>";
+		};
 		6A89B4E71F036EBB00718E65 = {
 			isa = PBXGroup;
 			children = (
@@ -227,6 +239,7 @@
 		6A89B4F21F036EBB00718E65 /* MSHalfTangDemo */ = {
 			isa = PBXGroup;
 			children = (
+				6A72B94D1F442A4B004C5B39 /* category */,
 				6A89B52A1F036F4800718E65 /* util */,
 				6A89B5271F036F2700718E65 /* source */,
 				6A89B5291F036F3C00718E65 /* model */,
@@ -653,6 +666,7 @@
 				6A89B59B1F03754700718E65 /* MSHomeCell.m in Sources */,
 				6A89B5981F0374E700718E65 /* MSHomeNavigationBar.m in Sources */,
 				6A89B4FB1F036EBB00718E65 /* MSHomeViewController.m in Sources */,
+				6A72B9501F442A5D004C5B39 /* UINavigationController+JNAPushPopCompletionBlock.m in Sources */,
 				6A89B5951F0374D100718E65 /* MSHomeView.m in Sources */,
 				6A89B4F81F036EBB00718E65 /* AppDelegate.m in Sources */,
 				6A89B4F51F036EBB00718E65 /* main.m in Sources */,
