@@ -63,6 +63,53 @@
     [self.view addSubview:self.homeNavigationBar];
 }
 
+- (void)changeTopOtherViewsFrameWithTableView:(UITableView *)tableView {
+    
+    CGFloat tableViewoffsetY = tableView.contentOffset.y;
+    self.lastTableViewOffsetY = tableViewoffsetY;
+    
+    if (self.currentTableView == tableView) {
+        
+        if( self.lastTableViewOffsetY < -240){
+            
+            self.segMengtView.frame = CGRectMake(0, 200, SCREEN_WIDTH, 40);
+            self.cycleScrollView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 200);
+            
+        }else if ( self.lastTableViewOffsetY>=-240 &&  self.lastTableViewOffsetY<=-104) {
+            
+            self.segMengtView.frame = CGRectMake(0, (200 - (240+tableViewoffsetY)), SCREEN_WIDTH, 40);
+            self.cycleScrollView.frame = CGRectMake(0, -(240+tableViewoffsetY), SCREEN_WIDTH, 200);
+            
+        } else if ( self.lastTableViewOffsetY > -104){
+            
+            self.segMengtView.frame = CGRectMake(0, 64, SCREEN_WIDTH, 40);
+            self.cycleScrollView.frame = CGRectMake(0, -136, SCREEN_WIDTH, 200);
+        }
+    }
+}
+
+- (void)changeTableViewsContentOffset {
+    
+    for (UITableView *tableView in self.tableViews) {
+        
+        if (self.currentTableView != tableView) {
+            
+            if(  self.lastTableViewOffsetY < -240){
+                
+                tableView.contentOffset = CGPointMake(0, -240);
+                
+            }else if ( self.lastTableViewOffsetY>=-240 && self.lastTableViewOffsetY<=-104) {
+                
+                tableView.contentOffset = CGPointMake(0, self.lastTableViewOffsetY);
+                
+            } else if ( self.lastTableViewOffsetY > -104){
+                
+                tableView.contentOffset = CGPointMake(0, -104);
+            }
+        }
+    }
+}
+
 #pragma mark -UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     if (scrollView != self.mainScrollView) {
@@ -75,20 +122,7 @@
     
     if (self.segFlag) {
         self.segFlag = NO;
-        for (UITableView *tableView in self.tableViews) {
-            if(self.lastTableViewOffsetY < -240){
-                
-                tableView.contentOffset = CGPointMake(0, -240);
-                
-            } else if ( self.lastTableViewOffsetY>=-240 &&  self.lastTableViewOffsetY<=-104) {
-                
-                tableView.contentOffset = CGPointMake(0,  self.lastTableViewOffsetY);
-                
-            } else if ( self.lastTableViewOffsetY > -104){
-                
-                tableView.contentOffset = CGPointMake(0, -104);
-            }
-        }
+        [self changeTableViewsContentOffset];
     }
 }
 
@@ -108,49 +142,11 @@
             __weak typeof(self) weakSlef = self;
             MSHomeView *homeView = [[MSHomeView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH * i, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
             homeView.didScrollBlock = ^(UITableView *tableView) {
-                
-                CGFloat tableViewoffsetY = tableView.contentOffset.y;
-                self.lastTableViewOffsetY = tableViewoffsetY;
-                
-                if (self.currentTableView == tableView) {
-                    
-                    if( weakSlef.lastTableViewOffsetY < -240){
-                        
-                        weakSlef.segMengtView.frame = CGRectMake(0, 200, SCREEN_WIDTH, 40);
-                        weakSlef.cycleScrollView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 200);
-                        
-                    }else if ( self.lastTableViewOffsetY>=-240 &&  self.lastTableViewOffsetY<=-104) {
-                        
-                        weakSlef.segMengtView.frame = CGRectMake(0, (200 - (240+tableViewoffsetY)), SCREEN_WIDTH, 40);
-                        weakSlef.cycleScrollView.frame = CGRectMake(0, -(240+tableViewoffsetY), SCREEN_WIDTH, 200);
-                        
-                    } else if ( self.lastTableViewOffsetY > -104){
-                        
-                        weakSlef.segMengtView.frame = CGRectMake(0, 64, SCREEN_WIDTH, 40);
-                        weakSlef.cycleScrollView.frame = CGRectMake(0, -136, SCREEN_WIDTH, 200);
-                    }
-                }
+                [weakSlef changeTopOtherViewsFrameWithTableView:tableView];
             };
             
             homeView.didEndScrollBlock = ^(UITableView *tableView) {
-                for (UITableView *tableView in weakSlef.tableViews) {
-                    
-                    if (weakSlef.currentTableView != tableView) {
-                        
-                        if(  weakSlef.lastTableViewOffsetY < -240){
-                            
-                            tableView.contentOffset = CGPointMake(0, -240);
-                            
-                        }else if ( weakSlef.lastTableViewOffsetY>=-240 &&  weakSlef.lastTableViewOffsetY<=-104) {
-                            
-                            tableView.contentOffset = CGPointMake(0,  weakSlef.lastTableViewOffsetY);
-                            
-                        } else if ( weakSlef.lastTableViewOffsetY > -104){
-                            
-                            tableView.contentOffset = CGPointMake(0, -104);
-                        }
-                    }
-                }
+                [weakSlef changeTableViewsContentOffset];
             };
             
             [self.mainScrollView addSubview:homeView];
@@ -185,6 +181,7 @@
         _segMengtView = [[MSSegmentView alloc] initWithFrame:CGRectMake(0, 200, SCREEN_WIDTH, 40)];
         _segMengtView.datas = self.segments;
         _segMengtView.didSelectedItem = ^(NSUInteger item) {
+            weakSlef.currentTableView = weakSlef.tableViews[item];
             weakSlef.segFlag = YES;
             weakSlef.mainScrollView.contentOffset = CGPointMake(item * SCREEN_WIDTH, 0);
         };

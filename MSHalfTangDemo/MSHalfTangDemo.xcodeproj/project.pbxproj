@@ -482,7 +482,7 @@
 				TargetAttributes = {
 					6A89B4EF1F036EBB00718E65 = {
 						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = 4XQJVX2W6F;
+						DevelopmentTeam = 7NC535VVH6;
 						ProvisioningStyle = Automatic;
 					};
 					6A89B5081F036EBB00718E65 = {
@@ -805,7 +805,7 @@
 			baseConfigurationReference = A33AD34109CADFFADF7FF64A /* Pods-MSHalfTangDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 4XQJVX2W6F;
+				DEVELOPMENT_TEAM = 7NC535VVH6;
 				INFOPLIST_FILE = MSHalfTangDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = geg.MSHalfTangDemo;
@@ -818,7 +818,7 @@
 			baseConfigurationReference = 39102A25D6C1A526FD297AC0 /* Pods-MSHalfTangDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 4XQJVX2W6F;
+				DEVELOPMENT_TEAM = 7NC535VVH6;
 				INFOPLIST_FILE = MSHalfTangDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = geg.MSHalfTangDemo;
