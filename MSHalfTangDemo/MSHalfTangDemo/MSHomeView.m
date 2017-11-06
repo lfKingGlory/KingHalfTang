@@ -73,20 +73,14 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+
     if (self.didScrollBlock) {
         self.didScrollBlock((UITableView *)scrollView);
     }
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    if (!decelerate) {
-        if (self.didEndScrollBlock) {
-            self.didEndScrollBlock((UITableView *)scrollView);
-        }
-    }
-}
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    
     if (self.didEndScrollBlock) {
         self.didEndScrollBlock((UITableView *)scrollView);
     }

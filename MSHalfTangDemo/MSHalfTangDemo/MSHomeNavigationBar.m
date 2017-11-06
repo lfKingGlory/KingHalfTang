@@ -41,8 +41,6 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    
-    
     if (![keyPath isEqualToString:@"contentOffset"]) {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
         return;
@@ -63,7 +61,6 @@
             self.searchBar.frame = CGRectMake(-(self.width-60), 30, self.width-80, 30);
             self.emailButton.alpha = 1-alpha;
             self.searchButton.alpha = 1-alpha;
-            
             
         }];
     } else if (tableViewoffsetY >= -104){

@@ -26,9 +26,6 @@
 @property (nonatomic, strong) NSMutableArray *tableViews;
 @property (nonatomic, strong) NSMutableArray *segments;
 @property (nonatomic, assign) CGFloat lastTableViewOffsetY;
-
-@property (assign, nonatomic) BOOL segFlag;
-
 @end
 
 @implementation MSHomeViewController
@@ -44,7 +41,6 @@
 - (void)configure {
     self.lastTableViewOffsetY = -240;
     self.automaticallyAdjustsScrollViewInsets = NO;
-    self.segFlag = NO;
     self.tableViews = [NSMutableArray array];
     self.segments = [NSMutableArray array];
     NSArray *datas = @[@"推荐",@"原创",@"热门",@"美食",@"生活",@"设计感",@"家居",@"礼物",@"阅读",@"运动健身",@"旅行户外"];
@@ -110,7 +106,7 @@
     }
 }
 
-#pragma mark -UIScrollViewDelegate
+#pragma mark - UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     if (scrollView != self.mainScrollView) {
         return;
@@ -119,11 +115,6 @@
     int index =  scrollView.contentOffset.x/scrollView.frame.size.width + 0.5;
     self.currentTableView  = self.tableViews[index];
     [self.segMengtView updateWithIndex:index];
-    
-    if (self.segFlag) {
-        self.segFlag = NO;
-        [self changeTableViewsContentOffset];
-    }
 }
 
 #pragma mark - lazy
@@ -181,8 +172,6 @@
         _segMengtView = [[MSSegmentView alloc] initWithFrame:CGRectMake(0, 200, SCREEN_WIDTH, 40)];
         _segMengtView.datas = self.segments;
         _segMengtView.didSelectedItem = ^(NSUInteger item) {
-            weakSlef.currentTableView = weakSlef.tableViews[item];
-            weakSlef.segFlag = YES;
             weakSlef.mainScrollView.contentOffset = CGPointMake(item * SCREEN_WIDTH, 0);
         };
     }
