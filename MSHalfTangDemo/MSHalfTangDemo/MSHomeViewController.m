@@ -126,7 +126,6 @@
         _mainScrollView.pagingEnabled = YES;
         _mainScrollView.showsVerticalScrollIndicator = NO;
         _mainScrollView.showsHorizontalScrollIndicator = NO;
-        _mainScrollView.scrollsToTop = NO;
         _mainScrollView.backgroundColor = [UIColor whiteColor];
         
         for (int i = 0; i < self.segments.count; i++) {
@@ -146,7 +145,6 @@
         }
         
         self.currentTableView = self.tableViews[0];
-        self.currentTableView.scrollsToTop = YES;
         _mainScrollView.contentSize = CGSizeMake(self.tableViews.count * SCREEN_WIDTH, 0);
         
     }
