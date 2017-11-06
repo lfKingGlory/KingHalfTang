@@ -73,7 +73,6 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-
     if (self.didScrollBlock) {
         self.didScrollBlock((UITableView *)scrollView);
     }
@@ -81,6 +80,12 @@
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
     
+    if (self.didEndScrollBlock) {
+        self.didEndScrollBlock((UITableView *)scrollView);
+    }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     if (self.didEndScrollBlock) {
         self.didEndScrollBlock((UITableView *)scrollView);
     }
@@ -95,6 +100,7 @@
         _tableView.scrollsToTop = NO;
         _tableView.separatorInset = UIEdgeInsetsZero;
         _tableView.scrollIndicatorInsets = UIEdgeInsetsMake(182, 0, 0, 0);
+        _tableView.scrollsToTop = NO;
         _tableView.contentInset = UIEdgeInsetsMake(240, 0, 0, 0);
         
         __weak typeof(self) weakSelf = self;

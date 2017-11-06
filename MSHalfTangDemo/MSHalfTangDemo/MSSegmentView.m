@@ -39,6 +39,7 @@
     self.collectionView.dataSource = self;
     self.collectionView.showsVerticalScrollIndicator = NO;
     self.collectionView.showsHorizontalScrollIndicator = NO;
+    self.collectionView.scrollsToTop = NO;
     [self addSubview:self.collectionView];
     self.collectionView.backgroundColor = [UIColor whiteColor];
     
