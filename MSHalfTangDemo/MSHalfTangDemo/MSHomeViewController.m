@@ -160,11 +160,12 @@
         return;
     }
     
-    int index =  scrollView.contentOffset.x/scrollView.frame.size.width + 0.5;
+    CGFloat progressX = scrollView.contentOffset.x/scrollView.frame.size.width;
+    int index =  progressX;
     self.currentTableView.scrollsToTop = NO;
     self.currentTableView  = self.tableViews[index];
     self.currentTableView.scrollsToTop = YES;
-    [self.segMengtView updateWithIndex:index];
+    [self.segMengtView updateWithIndex:index contentOffsetXProgress:progressX];
 }
 
 #pragma mark - lazy

@@ -14,7 +14,6 @@
 @interface MSSegmentView ()<UICollectionViewDelegateFlowLayout, UICollectionViewDataSource>
 @property (strong, nonatomic) UICollectionView *collectionView;
 @property (strong, nonatomic) UIView *line;
-@property (assign, nonatomic) NSInteger currentIndex;
 @end
 
 @implementation MSSegmentView
@@ -29,8 +28,6 @@
 }
 
 - (void)addSubViews {
-    
-    self.currentIndex = -1;
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.minimumLineSpacing = 0;
@@ -80,19 +77,22 @@
     return CGSizeMake(model.width, model.height);
 }
 
-- (void)updateWithIndex:(NSInteger)index {
-    for (int i = 0; i < self.datas.count; i++) {
-        MSSegmentModel *model = self.datas[i];
-        model.isSelected = (i == index);
+- (void)updateWithIndex:(NSInteger)index contentOffsetXProgress:(CGFloat)contentOffsetXProgress {
+    
+    NSInteger nextIndex = 0;
+    nextIndex = MIN(index + 1, self.datas.count - 1);
+    MSSegmentModel *currentModel = self.datas[index];
+    MSSegmentModel *nextModel = self.datas[nextIndex];
+    CGFloat progress = contentOffsetXProgress - floor(contentOffsetXProgress);
+    
+    if (contentOffsetXProgress >= 0) {
+        self.line.x = (currentModel.x + currentModel.padding) + (nextModel.x - currentModel.x) * progress;
+        self.line.width = (currentModel.width - currentModel.padding * 2) + (nextModel.width - currentModel.width) * progress;
+        
+        nextModel.isSelected = (progress >= 0.5);
+        currentModel.isSelected = !(progress >= 0.5);
     }
     
-    if (self.currentIndex != index) {
-        self.currentIndex = index;
-        MSSegmentModel *model = self.datas[index];
-        self.line.width = model.width - model.padding * 2;
-        self.line.x = model.x + model.padding;
-    }
-
     [self.collectionView reloadData];
     [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
 }
