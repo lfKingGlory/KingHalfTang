@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6A31EA1A202D8B4000486873 /* YYFPSLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A31EA18202D8B4000486873 /* YYFPSLabel.m */; };
+		6A31EA1D202D8B7D00486873 /* YYWeakProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A31EA1C202D8B7D00486873 /* YYWeakProxy.m */; };
 		6A72B9501F442A5D004C5B39 /* UINavigationController+JNAPushPopCompletionBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A72B94F1F442A5D004C5B39 /* UINavigationController+JNAPushPopCompletionBlock.m */; };
 		6A89B4F51F036EBB00718E65 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A89B4F41F036EBB00718E65 /* main.m */; };
 		6A89B4F81F036EBB00718E65 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A89B4F71F036EBB00718E65 /* AppDelegate.m */; };
@@ -92,6 +94,10 @@
 
 /* Begin PBXFileReference section */
 		39102A25D6C1A526FD297AC0 /* Pods-MSHalfTangDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MSHalfTangDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-MSHalfTangDemo/Pods-MSHalfTangDemo.release.xcconfig"; sourceTree = "<group>"; };
+		6A31EA18202D8B4000486873 /* YYFPSLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYFPSLabel.m; sourceTree = "<group>"; };
+		6A31EA19202D8B4000486873 /* YYFPSLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYFPSLabel.h; sourceTree = "<group>"; };
+		6A31EA1B202D8B7D00486873 /* YYWeakProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYWeakProxy.h; sourceTree = "<group>"; };
+		6A31EA1C202D8B7D00486873 /* YYWeakProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYWeakProxy.m; sourceTree = "<group>"; };
 		6A72B94E1F442A5D004C5B39 /* UINavigationController+JNAPushPopCompletionBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+JNAPushPopCompletionBlock.h"; sourceTree = "<group>"; };
 		6A72B94F1F442A5D004C5B39 /* UINavigationController+JNAPushPopCompletionBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+JNAPushPopCompletionBlock.m"; sourceTree = "<group>"; };
 		6A89B4F01F036EBB00718E65 /* MSHalfTangDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MSHalfTangDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -305,6 +311,10 @@
 		6A89B5281F036F3300718E65 /* view */ = {
 			isa = PBXGroup;
 			children = (
+				6A31EA1B202D8B7D00486873 /* YYWeakProxy.h */,
+				6A31EA1C202D8B7D00486873 /* YYWeakProxy.m */,
+				6A31EA19202D8B4000486873 /* YYFPSLabel.h */,
+				6A31EA18202D8B4000486873 /* YYFPSLabel.m */,
 				6A89B5931F0374D100718E65 /* MSHomeView.h */,
 				6A89B5941F0374D100718E65 /* MSHomeView.m */,
 				6A89B5991F03754700718E65 /* MSHomeCell.h */,
@@ -657,6 +667,7 @@
 			files = (
 				6A89B5A71F03820900718E65 /* MSSegmentCell.m in Sources */,
 				6A89B59E1F0376E400718E65 /* MSSegmentView.m in Sources */,
+				6A31EA1A202D8B4000486873 /* YYFPSLabel.m in Sources */,
 				6A89B5331F036FD400718E65 /* MSRefreshHeader.m in Sources */,
 				6A89B5921F0370D300718E65 /* MSHalfTangModel.m in Sources */,
 				6A89B5341F036FD400718E65 /* UIColor+StringColor.m in Sources */,
@@ -667,6 +678,7 @@
 				6A89B5981F0374E700718E65 /* MSHomeNavigationBar.m in Sources */,
 				6A89B4FB1F036EBB00718E65 /* MSHomeViewController.m in Sources */,
 				6A72B9501F442A5D004C5B39 /* UINavigationController+JNAPushPopCompletionBlock.m in Sources */,
+				6A31EA1D202D8B7D00486873 /* YYWeakProxy.m in Sources */,
 				6A89B5951F0374D100718E65 /* MSHomeView.m in Sources */,
 				6A89B4F81F036EBB00718E65 /* AppDelegate.m in Sources */,
 				6A89B4F51F036EBB00718E65 /* main.m in Sources */,

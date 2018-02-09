@@ -6,12 +6,15 @@
 //  Copyright © 2017年 msj. All rights reserved.
 //
 
+
 #import "MSHomeViewController.h"
 #import "MSHomeView.h"
 #import "MSSegmentView.h"
 #import "MSHomeNavigationBar.h"
 #import "SDCycleScrollView.h"
 #import "MSSegmentModel.h"
+#import "YYFPSLabel.h"
+#import "UIView+Extension.h"
 
 #define SCREEN_HEIGHT                      [UIScreen mainScreen].bounds.size.height
 #define SCREEN_WIDTH                       [UIScreen mainScreen].bounds.size.width
@@ -26,6 +29,8 @@
 @property (nonatomic, strong) NSMutableArray *tableViews;
 @property (nonatomic, strong) NSMutableArray *segments;
 @property (nonatomic, assign) CGFloat lastTableViewOffsetY;
+
+
 @end
 
 @implementation MSHomeViewController
@@ -44,10 +49,17 @@
     self.tableViews = [NSMutableArray array];
     self.segments = [NSMutableArray array];
     NSArray *datas = @[@"推荐",@"原创",@"热门",@"美食",@"生活",@"设计感",@"家居",@"礼物",@"阅读",@"运动健身",@"旅行户外"];
+    
+    CGFloat x = 0;
     for (int i = 0; i < datas.count; i++) {
         MSSegmentModel *model = [MSSegmentModel new];
         model.title = datas[i];
         model.isSelected = (i == 0);
+        CGSize size = [model.title sizeWithAttributes:@{NSFontAttributeName : [UIFont systemFontOfSize:15]}];
+        model.width = size.width + 20;
+        model.height = 40;
+        model.x = x;
+        x = model.x + model.width;
         [self.segments addObject:model];
     }
 }
@@ -57,6 +69,14 @@
     [self.view addSubview:self.cycleScrollView];
     [self.view addSubview:self.segMengtView];
     [self.view addSubview:self.homeNavigationBar];
+    [self scrollViewDidScroll:self.mainScrollView];
+    
+    YYFPSLabel *fps = [YYFPSLabel new];
+    [fps sizeToFit];
+    fps.x = self.view.width - fps.width - 20;
+    fps.y = self.view.height - fps.height - 40;
+    [self.view addSubview:fps];
+    
 }
 
 - (void)changeTopOtherViewsFrameWithTableView:(UITableView *)tableView {
@@ -67,41 +87,69 @@
     if (self.currentTableView == tableView) {
         
         if( self.lastTableViewOffsetY < -240){
-            
+
             self.segMengtView.frame = CGRectMake(0, 200, SCREEN_WIDTH, 40);
             self.cycleScrollView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 200);
-            
+
         }else if ( self.lastTableViewOffsetY>=-240 &&  self.lastTableViewOffsetY<=-104) {
-            
+
             self.segMengtView.frame = CGRectMake(0, (200 - (240+tableViewoffsetY)), SCREEN_WIDTH, 40);
             self.cycleScrollView.frame = CGRectMake(0, -(240+tableViewoffsetY), SCREEN_WIDTH, 200);
-            
+
         } else if ( self.lastTableViewOffsetY > -104){
-            
+
             self.segMengtView.frame = CGRectMake(0, 64, SCREEN_WIDTH, 40);
             self.cycleScrollView.frame = CGRectMake(0, -136, SCREEN_WIDTH, 200);
         }
+        
+//        if( self.lastTableViewOffsetY <=-104){
+//
+//            self.segMengtView.frame = CGRectMake(0, (200 - (240+tableViewoffsetY)), SCREEN_WIDTH, 40);
+//            self.cycleScrollView.frame = CGRectMake(0, -(240+tableViewoffsetY), SCREEN_WIDTH, 200);
+//
+//        } else if ( self.lastTableViewOffsetY > -104){
+//
+//            self.segMengtView.frame = CGRectMake(0, 64, SCREEN_WIDTH, 40);
+//            self.cycleScrollView.frame = CGRectMake(0, -136, SCREEN_WIDTH, 200);
+//        }
     }
+    
 }
 
 - (void)changeTableViewsContentOffset {
     
     for (UITableView *tableView in self.tableViews) {
-        
+
         if (self.currentTableView != tableView) {
-            
-            if(  self.lastTableViewOffsetY < -240){
-                
+
+            if(self.lastTableViewOffsetY < -240){
+
                 tableView.contentOffset = CGPointMake(0, -240);
-                
-            }else if ( self.lastTableViewOffsetY>=-240 && self.lastTableViewOffsetY<=-104) {
-                
+
+            }else if (self.lastTableViewOffsetY>=-240 && self.lastTableViewOffsetY<=-104) {
+
                 tableView.contentOffset = CGPointMake(0, self.lastTableViewOffsetY);
-                
-            } else if ( self.lastTableViewOffsetY > -104){
-                
-                tableView.contentOffset = CGPointMake(0, -104);
+
+            } else if (self.lastTableViewOffsetY > -104){
+
+                if (tableView.contentOffset.y <= -104) {
+                    tableView.contentOffset = CGPointMake(0, -104);
+                }
             }
+            
+            
+            
+//            if(self.lastTableViewOffsetY <= -104){
+//
+//                tableView.contentOffset = CGPointMake(0, self.lastTableViewOffsetY);
+//
+//            } else if ( self.lastTableViewOffsetY > -104){
+//
+//                if (tableView.contentOffset.y <= -104) {
+//                    tableView.contentOffset = CGPointMake(0, -104);
+//                }
+//
+//            }
         }
     }
 }
@@ -113,7 +161,9 @@
     }
     
     int index =  scrollView.contentOffset.x/scrollView.frame.size.width + 0.5;
+    self.currentTableView.scrollsToTop = NO;
     self.currentTableView  = self.tableViews[index];
+    self.currentTableView.scrollsToTop = YES;
     [self.segMengtView updateWithIndex:index];
 }
 
@@ -127,7 +177,12 @@
         _mainScrollView.showsVerticalScrollIndicator = NO;
         _mainScrollView.showsHorizontalScrollIndicator = NO;
         _mainScrollView.backgroundColor = [UIColor whiteColor];
-        
+        _mainScrollView.scrollsToTop = NO;
+#ifdef __IPHONE_11_0
+        if (@available(iOS 11.0, *)) {
+            _mainScrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+        }
+#endif
         for (int i = 0; i < self.segments.count; i++) {
             
             __weak typeof(self) weakSlef = self;
@@ -171,8 +226,13 @@
         __weak typeof(self) weakSlef = self;
         _segMengtView = [[MSSegmentView alloc] initWithFrame:CGRectMake(0, 200, SCREEN_WIDTH, 40)];
         _segMengtView.datas = self.segments;
-        _segMengtView.didSelectedItem = ^(NSUInteger item) {
-            weakSlef.mainScrollView.contentOffset = CGPointMake(item * SCREEN_WIDTH, 0);
+        _segMengtView.didSelectedItem = ^(NSInteger item) {
+            NSInteger currentIndex = self.mainScrollView.contentOffset.x/self.mainScrollView.frame.size.width;
+            if (labs(currentIndex - item) == 1) {
+                [weakSlef.mainScrollView setContentOffset:CGPointMake(item * SCREEN_WIDTH, 0) animated:YES];
+            } else {
+                weakSlef.mainScrollView.contentOffset = CGPointMake(item * SCREEN_WIDTH, 0);
+            }
         };
     }
     return _segMengtView;

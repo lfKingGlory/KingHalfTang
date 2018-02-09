@@ -79,7 +79,12 @@
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    
+    if (self.didEndScrollBlock) {
+        self.didEndScrollBlock((UITableView *)scrollView);
+    }
+}
+
+- (void)scrollViewDidScrollToTop:(UIScrollView *)scrollView {
     if (self.didEndScrollBlock) {
         self.didEndScrollBlock((UITableView *)scrollView);
     }
@@ -94,14 +99,22 @@
 - (UITableView *)tableView {
     if (!_tableView) {
         
-        _tableView  = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.width, self.height)];
+        _tableView  = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.width, self.height) style:UITableViewStylePlain];
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.scrollsToTop = NO;
+        _tableView.estimatedRowHeight = 0;
+        _tableView.estimatedSectionFooterHeight = 0;
+        _tableView.estimatedSectionHeaderHeight = 0;
         _tableView.separatorInset = UIEdgeInsetsZero;
-        _tableView.scrollIndicatorInsets = UIEdgeInsetsMake(182, 0, 0, 0);
         _tableView.scrollsToTop = NO;
+        _tableView.scrollIndicatorInsets = UIEdgeInsetsMake(240, 0, 0, 0);
         _tableView.contentInset = UIEdgeInsetsMake(240, 0, 0, 0);
+#ifdef __IPHONE_11_0
+        if (@available(iOS 11.0, *)) {
+            _tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+        }
+#endif
         
         __weak typeof(self) weakSelf = self;
         MSRefreshHeader *header =[MSRefreshHeader headerWithRefreshingBlock:^{
@@ -111,6 +124,7 @@
         }];
         self.tableView.mj_header = header;
         self.tableView.mj_header.automaticallyChangeAlpha = YES;
+        
     }
     return _tableView;
 }

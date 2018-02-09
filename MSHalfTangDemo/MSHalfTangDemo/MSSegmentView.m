@@ -14,6 +14,7 @@
 @interface MSSegmentView ()<UICollectionViewDelegateFlowLayout, UICollectionViewDataSource>
 @property (strong, nonatomic) UICollectionView *collectionView;
 @property (strong, nonatomic) UIView *line;
+@property (assign, nonatomic) NSInteger currentIndex;
 @end
 
 @implementation MSSegmentView
@@ -28,6 +29,8 @@
 }
 
 - (void)addSubViews {
+    
+    self.currentIndex = -1;
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.minimumLineSpacing = 0;
@@ -49,6 +52,7 @@
     self.line.backgroundColor = [UIColor redColor];
     self.line.height = 2;
     self.line.y = self.height - 2;
+    [self.collectionView addSubview:self.line];
     
     UIView *bottomLine = [[UIView alloc] initWithFrame:CGRectMake(0, self.height - 0.5, self.width, 0.5)];
     bottomLine.backgroundColor = [UIColor ms_colorWithHexString:@"#f8f8f8"];
@@ -66,8 +70,6 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    [self updateWithIndex:indexPath.item];
-    
     if (self.didSelectedItem) {
         self.didSelectedItem(indexPath.item);
     }
@@ -75,9 +77,7 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     MSSegmentModel *model = self.datas[indexPath.item];
-    CGSize size = [model.title sizeWithAttributes:@{NSFontAttributeName : [UIFont systemFontOfSize:15]}];
-    
-    return CGSizeMake(size.width + 20, self.height);
+    return CGSizeMake(model.width, model.height);
 }
 
 - (void)updateWithIndex:(NSInteger)index {
@@ -85,6 +85,14 @@
         MSSegmentModel *model = self.datas[i];
         model.isSelected = (i == index);
     }
+    
+    if (self.currentIndex != index) {
+        self.currentIndex = index;
+        MSSegmentModel *model = self.datas[index];
+        self.line.width = model.width - model.padding * 2;
+        self.line.x = model.x + model.padding;
+    }
+
     [self.collectionView reloadData];
     [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
 }

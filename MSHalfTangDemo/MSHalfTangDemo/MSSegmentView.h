@@ -10,6 +10,6 @@
 
 @interface MSSegmentView : UIView
 @property (strong, nonatomic) NSArray *datas;
-@property (copy, nonatomic) void (^didSelectedItem)(NSUInteger item);
+@property (copy, nonatomic) void (^didSelectedItem)(NSInteger item);
 - (void)updateWithIndex:(NSInteger)index;
 @end
