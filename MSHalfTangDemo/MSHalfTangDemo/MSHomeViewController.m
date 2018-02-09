@@ -56,7 +56,8 @@
         model.title = datas[i];
         model.isSelected = (i == 0);
         CGSize size = [model.title sizeWithAttributes:@{NSFontAttributeName : [UIFont systemFontOfSize:15]}];
-        model.width = size.width + 20;
+        model.padding = 10;
+        model.width = size.width + model.padding * 2;
         model.height = 40;
         model.x = x;
         x = model.x + model.width;
